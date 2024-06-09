@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -34,10 +33,6 @@ app.post('/coze-ai', async (req, res) => {
     } catch (error) {
         res.status(500).send(error.response ? error.response.data : error.message);
     }
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
 });
 
 exports.app = functions.https.onRequest(app);
