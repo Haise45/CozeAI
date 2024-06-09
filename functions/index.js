@@ -8,13 +8,7 @@ const app = express();
 const port = 5000;
 
 app.use(bodyParser.json());
-
-const corsOptions = {
-    origin: 'https://tesingcoze.web.app',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 const COZE_API_KEY = 'pat_RzAvz7WkA1TE79XRYfuboY09jYjFCmO9OvYbTo4BXB6NEMxPztUq8lq04cpriI2o';
 const BOT_ID = '7376927058456657938';
