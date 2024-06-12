@@ -45,58 +45,33 @@
     }
     
     // Hàm fetch để gửi yêu cầu đến bot và nhận câu trả lời
-    const api = "https://us-central1-tesingcoze.cloudfunctions.net/app"
-    const api_local = "http://localhost:3000"
-    async function fetchBotResponse(userQuery) {
-        try {
-            const response = await fetch(`${api}/coze-ai`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    query: userQuery,
-                }),
-            });
-            
-            const data = await response.json();
-            if (data && data.messages) {
-                const botResponse = data.messages.find(
-                    (message) => message.type === "answer"
-                );
-                return botResponse;
-            } else {
-                throw new Error("No response received from the bot.");
-            }
-        } catch (error) {
-            console.error("Error fetching from API:", error);
-            // Nếu fetch từ API không thành công, thử fetch từ API local
-            try {
-                const response = await fetch(`${api_local}/coze-ai`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        query: userQuery,
-                    }),
-                });
-                
-                const data = await response.json();
-                if (data && data.messages) {
-                    const botResponse = data.messages.find(
-                        (message) => message.type === "answer"
-                    );
-                    return botResponse;
-                } else {
-                    throw new Error("No response received from the bot.");
-                }
-            } catch (error) {
-                console.error("Error fetching from local API:", error);
-                throw error;
-            }
+const api = window.location.origin;
+async function fetchBotResponse(userQuery) {
+    try {
+        const response = await fetch(`${api}/coze-ai`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: userQuery,
+            }),
+        });
+
+        const data = await response.json();
+        if (data && data.messages) {
+            const botResponse = data.messages.find(
+                (message) => message.type === "answer"
+            );
+            return botResponse;
+        } else {
+            throw new Error("No response received from the bot.");
         }
+    } catch (error) {
+        console.error("Error fetching from API:", error);
+        throw error;
     }
+}
     
     // Gắn sự kiện click cho nút send-request
     document.getElementById("send-request").addEventListener("click", () => {
