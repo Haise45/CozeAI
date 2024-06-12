@@ -6,8 +6,14 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cors());
+app.use(express.json());
+
+const corsOptions = {
+  origin: true, // Cho phép tất cả các nguồn
+  optionsSuccessStatus: 200 // Một số trình duyệt cũ bắt buộc phải có
+}
+
+app.use(cors(corsOptions));
 
 const COZE_API_KEY = 'pat_RzAvz7WkA1TE79XRYfuboY09jYjFCmO9OvYbTo4BXB6NEMxPztUq8lq04cpriI2o';
 const BOT_ID = '7376927058456657938';
